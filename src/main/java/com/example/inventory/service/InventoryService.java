@@ -1,17 +1,17 @@
 package com.example.inventory.service;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
+import lombok.RequiredArgsConstructor;
 import com.example.inventory.model.InventoryResponse;
+import com.example.inventory.client.InventoryFeignClient;
 
 @Service
+@RequiredArgsConstructor
 public class InventoryService {
-    private static final String API_URL = "https://jsonmock.hackerrank.com/api/inventory?page=%d";
-    private final RestTemplate restTemplate = new RestTemplate();
+
+    private final InventoryFeignClient inventoryFeignClient;
 
     public InventoryResponse fetchInventory(int page) {
-        String url = String.format(API_URL, page);
-        return restTemplate.getForObject(url, InventoryResponse.class);
+        return inventoryFeignClient.getInventory(page);
     }
 }
