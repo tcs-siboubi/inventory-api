@@ -15,7 +15,10 @@ import com.example.inventory.model.InventoryResponse;
  *
  * @author aideh
  */
-@FeignClient(name = "inventoryClient", url = "https://jsonmock.hackerrank.com")
+@FeignClient(
+    name = "inventoryClient", 
+    url = "https://jsonmock.hackerrank.com",
+    fallbackFactory = InventoryFallbackFactory.class)
 public interface InventoryFeignClient {
     
     @GetMapping("/api/inventory")
