@@ -5,7 +5,9 @@
 
 package com.example.inventory.service;
 
+import com.example.inventory.client.InventoryFeignClient;
 import com.example.inventory.model.InventoryItem;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,12 +18,19 @@ import java.util.List;
  * @author aideh
  */
 @Service
+@RequiredArgsConstructor
 public class InventoryItemService {
-    
+
     private final List<InventoryItem> items = new ArrayList<>();
+    private final InventoryFeignClient inventoryFeignClient;
 
     public List<InventoryItem> getAllInventoryItems() {
-        return items;
+        List<InventoryItem> inventoryItems = inventoryFeignClient.getInventory(1).getData();
+        if (inventoryItems == null) {
+            inventoryItems = new ArrayList<>();
+        }
+        // If you want to simulate a delay or some processing, you can uncomment the line below
+        return inventoryItems;
     }
 
     public InventoryItem getInventoryItemByBarcode(String barcode) {
