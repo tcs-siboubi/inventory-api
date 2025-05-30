@@ -13,6 +13,6 @@ public class InventoryResponse {
     private int page;
     private int total;
     private int total_pages;
-    private List<Object> data;
+    private List<InventoryItem> data;
 
 }
