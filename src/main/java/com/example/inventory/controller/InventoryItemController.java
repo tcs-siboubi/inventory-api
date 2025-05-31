@@ -5,6 +5,8 @@
 
 package com.example.inventory.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import com.example.inventory.model.InventoryItem;
 import com.example.inventory.service.InventoryItemService;
 import lombok.RequiredArgsConstructor;
@@ -19,21 +21,27 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/inventory/items")
+@Tag(name = "Inventorys Item", description = "Inventory Item management APIs")
 @RequiredArgsConstructor
 public class InventoryItemController {
     private final InventoryItemService inventoryItemService;
 
     @GetMapping
+    @Operation(summary = "List all inventory items")
     public List<InventoryItem> getAllItems() {
         return inventoryItemService.getAllInventoryItems();
     }
 
     @GetMapping("/{barcode}")
+    @Operation(summary = "List the first inventory item with the given barcode")
+    @ResponseStatus(HttpStatus.OK)
     public InventoryItem getItemByBarcode(@PathVariable String barcode) {
         return inventoryItemService.getInventoryItemByBarcode(barcode);
     }
 
     @PostMapping
+    @Operation(summary = "Add inventory item if it does not already exist")
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<String> addItem(@RequestBody InventoryItem item) {
         if (inventoryItemService.isBarcodeExists(item.getBarcode())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Item with this barcode already exists.");
@@ -43,6 +51,8 @@ public class InventoryItemController {
     }
 
     @PutMapping("/{barcode}")
+    @Operation(summary = "Update inventory item by barcode")
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> updateItem(@PathVariable String barcode, @RequestBody InventoryItem updatedItem) {
         if (!inventoryItemService.isBarcodeExists(barcode)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item not found.");
@@ -52,6 +62,8 @@ public class InventoryItemController {
     }
 
     @DeleteMapping("/{barcode}")
+    @Operation(summary = "Delete inventory item by barcode")
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> deleteItem(@PathVariable String barcode) {
         if (!inventoryItemService.isBarcodeExists(barcode)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item not found.");
