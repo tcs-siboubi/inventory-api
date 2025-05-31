@@ -26,6 +26,7 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
     // Optional: for resilience with retries/timeouts (Resilience4j)
     implementation 'io.github.resilience4j:resilience4j-spring-boot3'
