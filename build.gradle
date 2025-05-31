@@ -23,6 +23,10 @@ repositories {
 	mavenCentral()
 }
 
+ext {
+    springdocVersion = '+'
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
@@ -31,8 +35,8 @@ dependencies {
     // Optional: for resilience with retries/timeouts (Resilience4j)
     implementation 'io.github.resilience4j:resilience4j-spring-boot3'
 
-    // Swagger/OpenAPI documentation
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
+    implementation "org.springdoc:springdoc-openapi-starter-webmvc-api:${springdocVersion}"
+    implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${springdocVersion}"
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
